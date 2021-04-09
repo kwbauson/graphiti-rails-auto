@@ -24,7 +24,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'rails'
   spec.add_dependency 'graphiti'
   spec.add_dependency 'graphiti-rails'
+  spec.add_dependency 'vandal_ui'
+  spec.add_dependency 'kaminari'
+  spec.add_dependency 'responders'
 end
