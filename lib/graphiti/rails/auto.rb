@@ -1,4 +1,9 @@
 require "graphiti/rails/auto/version"
+require "graphiti"
+require "graphiti-rails"
+require "vandal_ui"
+require "kaminari"
+require "responders"
 
 module Graphiti::Rails::Auto
   class Resource < Graphiti::Resource
