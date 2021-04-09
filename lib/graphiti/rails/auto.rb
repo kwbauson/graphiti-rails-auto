@@ -11,16 +11,13 @@ module Graphiti::Rails::Auto
     self.adapter = Graphiti::Adapters::ActiveRecord
     self.endpoint_namespace = "/api/v1"
 
-    def self.inherited(subclass)
-      super(subclass)
-      model_name = subclass.name.delete_suffix("Resource")
+    def self.route
+      model_name = name.delete_suffix("Resource")
       controller_name = "#{model_name.pluralize}Controller"
       Object.const_set(model_name, Class.new(Record)) unless Object.const_defined?(model_name)
       Object.const_set(controller_name, Class.new(Controller)) unless Object.const_defined?(controller_name)
-    end
 
-    def self.route
-      self.name.delete_suffix("Resource").underscore.pluralize
+      name.delete_suffix("Resource").underscore.pluralize
     end
   end
 
