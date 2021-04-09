@@ -37,13 +37,13 @@ module Graphiti::Rails::Auto
     end
 
     def show
-      respond_with(resource.find(post))
+      respond_with(resource.find(params))
     end
 
     def create
       model = resource.build(params)
 
-      if post.save
+      if model.save
         render jsonapi: model, status: 201
       else
         render jsonapi_errors: model
@@ -73,8 +73,10 @@ module Graphiti::Rails::Auto
     private
 
     def check_params
-      passed_params = params.to_unsafe_h.except(:format, :action, :controller).deep_symbolize_keys
+      safe_extra_params = [:format, :action, :controller, :id]
+      passed_params = params.to_unsafe_h.except(*safe_extra_params).deep_symbolize_keys
       used_params = Graphiti::Query.new(resource, params).hash
+      pp used_params
       extra = (passed_params.to_a - used_params.to_a).to_h
       raise "extra params: #{extra}" unless extra.empty?
     end
